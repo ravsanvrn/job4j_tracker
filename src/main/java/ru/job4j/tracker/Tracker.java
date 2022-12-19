@@ -7,6 +7,17 @@ public class Tracker {
     private int ids = 1;
     private int size = 0;
 
+    private int indexOf(int id) {
+        int rsl = -1;
+        for (int index = 0; index < size; index++) {
+            if (items[index].getId() == id) {
+                rsl = index;
+                break;
+            }
+        }
+        return rsl;
+    }
+
     public Item add(Item item) {
         item.setId(ids++);
         items[size++] = item;
@@ -14,38 +25,32 @@ public class Tracker {
     }
 
     public Item findById(int id) {
-        Item rsl = null;
-        for (int index = 0; index < size; index++) {
-            Item item = items[index];
-            if (item.getId() == id) {
-                rsl = item;
-                break;
-            }
-        }
-        return rsl;
+        int index = indexOf(id);
+        return index != -1 ? items[index] : null;
     }
 
     public Item[] findAll() {
-        Item[] rsl = new Item[items.length];
-        int size = 0;
-        for (int index = 0; index < items.length; index++) {
-            if (items[index] != null) {
-                rsl[size] = items[index];
-                size++;
-            }
-        }
-        return Arrays.copyOf(rsl, size);
+        return Arrays.copyOf(items, size);
     }
 
     public Item[] findByName(String key) {
-        Item[] rsl = new Item[items.length];
-        int size = 0;
-        for (int index = 0; index < items.length; index++) {
-            if (items[index] != null && items[index].getName().equals(key)) {
-                rsl[size] = items[index];
-                size++;
+        Item[] rsl = new Item[size];
+        int counter = 0;
+        for (int index = 0; index < size; index++) {
+            if (items[index].getName().equals(key)) {
+                rsl[counter++] = items[index];
             }
         }
-        return Arrays.copyOf(rsl, size);
+        return Arrays.copyOf(rsl, counter);
+    }
+
+    public boolean replace(int id, Item newItem) {
+        int index = indexOf(id);
+        if (index == -1) {
+            return false;
+        }
+        items[index] = newItem;
+        items[index].setId(id);
+        return true;
     }
 }
