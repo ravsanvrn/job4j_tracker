@@ -44,12 +44,12 @@ public class Tracker {
         return Arrays.copyOf(rsl, counter);
     }
 
-    public boolean replace(int id, Item newItem) {
+    public boolean replace(int id, Item item) {
         int index = indexOf(id);
         boolean rsl = index != -1;
         if (rsl) {
-            items[index] = newItem;
-            items[index].setId(id);
+            item.setId(id);
+            items[index] = item;
         }
         return rsl;
     }
