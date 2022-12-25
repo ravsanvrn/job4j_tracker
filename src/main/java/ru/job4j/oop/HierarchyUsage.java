@@ -8,7 +8,5 @@ public class HierarchyUsage {
     Object ocar = new Car("Марка", "Модель");
     Car carFromObject = (Car) ocar;
 
-    //Object bicucle = new Bicycle();
-    //Car cb = (Car) bicucle;
 }
 
