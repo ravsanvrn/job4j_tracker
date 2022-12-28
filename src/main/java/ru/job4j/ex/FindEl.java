@@ -7,15 +7,30 @@ public class FindEl {
                 return i;
             }
         }
-        throw new ElementNotFoundException("Элемен не найжен!");
+        throw new ElementNotFoundException("В списке нет ключа шаблона сообщения!");
+    }
+
+    public static boolean sent(String value, String[] abuses) throws ElementAbuseException {
+        for (String abuse : abuses) {
+            if (abuse.equals(value)) {
+                throw new ElementAbuseException("Ключ находится в списке запрещенных!");
+            }
+        }
+        return true;
+    }
+
+    public static void process(String[] values, String key, String[] abuses) {
+        try {
+            indexOf(values, key);
+            sent(key, abuses);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public static void main(String[] args) {
-        try {
-            String[] value = {"qq", "ww", "ee"};
-            int rls = indexOf(value, "aa");
-        } catch (ElementNotFoundException e) {
-            e.printStackTrace();
-        }
+        String[] value = {"qq", "ww", "ee"};
+        String[] abuses = {"aa", "bb", "cc"};
+        process(value, "aa", abuses);
     }
 }
