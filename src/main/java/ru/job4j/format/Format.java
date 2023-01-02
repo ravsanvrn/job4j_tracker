@@ -1,4 +1,4 @@
-package format;
+package ru.job4j.format;
 
 import java.util.Calendar;
 
