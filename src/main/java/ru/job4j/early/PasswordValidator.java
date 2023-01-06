@@ -17,38 +17,28 @@ public class PasswordValidator {
         if (password.toLowerCase().equals(password)) {
             throw new IllegalArgumentException("Password should contain at least one uppercase letter");
         }
-        if (!containsNumber(password)) {
+        boolean containsNumber = false;
+        boolean allNumberOrSymbol = true;
+        for (int i = 0; i < password.length(); i++) {
+            if (isDigit(password.charAt(i))) {
+                containsNumber = true;
+            }
+            if (!isLetterOrDigit(password.charAt(i))) {
+                allNumberOrSymbol = false;
+            }
+        }
+        if (!containsNumber) {
             throw new IllegalArgumentException("Password should contain at least one figure");
         }
-        if (allNumberOrSymbol(password)) {
+        if (allNumberOrSymbol) {
             throw new IllegalArgumentException("Password should contain at least one special symbol");
         }
-        if (password.toLowerCase().contains("qwerty")
-                || password.contains("12345")
-                || password.toLowerCase().contains("password")
-                || password.toLowerCase().contains("admin")
-                || password.toLowerCase().contains("user")) {
-            throw new IllegalArgumentException("Password shouldn't contain substrings: qwerty, 12345, password, admin, user");
+        String[] badSubstrings = {"qwerty", "12345", "password", "admin", "user"};
+        for (String str : badSubstrings) {
+            if (password.toLowerCase().contains(str)) {
+                throw new IllegalArgumentException("Password shouldn't contain substrings: qwerty, 12345, password, admin, user");
+            }
         }
         return password;
     }
-
-    private static boolean containsNumber(String value) {
-        for (int i = 0; i < value.length(); i++) {
-            if (isDigit(value.charAt(i))) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    private static boolean allNumberOrSymbol(String value) {
-        for (int i = 0; i < value.length(); i++) {
-            if (!isLetterOrDigit(value.charAt(i))) {
-                return false;
-            }
-        }
-        return true;
-    }
-
 }
