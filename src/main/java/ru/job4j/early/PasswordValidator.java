@@ -18,19 +18,22 @@ public class PasswordValidator {
             throw new IllegalArgumentException("Password should contain at least one uppercase letter");
         }
         boolean containsNumber = false;
-        boolean allNumberOrSymbol = true;
+        boolean containsSymbol = false;
         for (int i = 0; i < password.length(); i++) {
             if (isDigit(password.charAt(i))) {
                 containsNumber = true;
             }
             if (!isLetterOrDigit(password.charAt(i))) {
-                allNumberOrSymbol = false;
+                containsSymbol = true;
+            }
+            if (containsNumber && containsSymbol) {
+                break;
             }
         }
         if (!containsNumber) {
             throw new IllegalArgumentException("Password should contain at least one figure");
         }
-        if (allNumberOrSymbol) {
+        if (!containsSymbol) {
             throw new IllegalArgumentException("Password should contain at least one special symbol");
         }
         String[] badSubstrings = {"qwerty", "12345", "password", "admin", "user"};
