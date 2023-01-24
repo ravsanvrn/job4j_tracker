@@ -30,8 +30,8 @@ public class Tracker {
         return index != -1 ? items.get(index) : null;
     }
 
-    public Item[] findAll() {
-        return items.toArray(new Item[0]);
+    public  List<Item> findAll() {
+        return items;
     }
 
     public Item[] findByName(String key) {
